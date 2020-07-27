@@ -1,0 +1,61 @@
+label {
+
+  height: 20px;
+  width: 200px;
+  margin-top: 10px;
+  margin-left: 10px;
+  text-align: right;
+  clear: both;
+  float: left;
+}
+.chercher {
+  background-color: #2f4894;
+  color: white!important;
+}
+
+input {
+  border: 1px solid #000;
+  float: left;
+}
+select {
+  border: 1px solid #000;
+}
+.table-scrollable.table-scrollable-borderless, .table-scrollable > .table-bordered {
+  border: 0;
+}
+.table-scrollable {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid #e7ecf1;
+  margin: 10px 0 !important;
+}
+.table.table-light {
+  border: 0 !important;
+}
+.table-scrollable > .table {
+  thead{
+    background-color: #2f4894;
+  }
+  width: 100% !important;
+  margin: 0 !important;
+  background-color: #fff;
+}
+
+.table.table-light > thead > tr > th {
+  font-weight: 600;
+  font-size: 13px;
+  color: white;
+  font-family: "Open Sans",sans-serif;
+  border: 0;
+  border-top-color: currentcolor;
+  border-top-style: none;
+  border-top-width: 0px;
+  border-bottom-color: currentcolor;
+  border-bottom-style: none;
+  border-bottom-width: 0px;
+  border-bottom: 1px solid #F2F5F8;
+}
+.table-scrollable > .table > tbody > tr > th, .table-scrollable > .table > tfoot > tr > td, .table-scrollable > .table > tfoot > tr > th, .table-scrollable > .table > thead > tr > th {
+  white-space: nowrap;
+}

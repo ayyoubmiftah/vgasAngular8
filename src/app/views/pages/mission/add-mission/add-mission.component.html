@@ -1,0 +1,499 @@
+<div>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a><i class="icon-settings"></i> Administration</a></li>
+            <li class="breadcrumb-item active" aria-current="page">add Mission</li>
+        </ul>
+    </nav>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-muted">add Mission</h4>
+                <div class="portlet-title tabbable-line menuEdit">
+                    <ul class="nav nav-tabs" [ngStyle]="{'pointer-events' : localstorageSuivant() == true ? 'none' : 'auto' }">
+                        <li *ngIf="menu==1" class="active"><a class="hli">Informations Personnelles</a></li>
+                        <li (click)="changeMenu(1)" *ngIf="menu!=1"><a class="hli">Informations Personnelles</a></li>
+                        <li *ngIf="menu==2" class="active"><a>Compétences technique</a></li>
+                        <li (click)="changeMenu(2)" *ngIf="menu!=2"><a class="hli">Compétences technique</a></li>
+                        <li class="active" *ngIf="menu==3"><a>Capacités managerielles</a></li>
+                        <li (click)="changeMenu(3)" *ngIf="menu!=3"><a class="hli">Capacités managerielles</a></li>
+                        <li (click)="changeMenu(4)" *ngIf="menu!=4"><a class="hli">Formations</a></li>
+                        <li class="active" *ngIf="menu==4"><a>Formations</a></li>
+                        <li (click)="changeMenu(5)" *ngIf="menu!=5"><a class="hli">Tags</a></li>
+                        <li class="active" *ngIf="menu==5"><a>Tags</a></li>
+                    </ul>
+                </div>
+                <div class="portlet light">
+                    <div class="portlet-body">
+                        <div class="row" *ngIf="menu==1">
+                            <div class="col-md-6 col-sm-12">
+                                <form role="form" [formGroup]="formMission">
+                                    <div class="form-group">
+                                        <label class="control-label">Titre</label>
+                                        <input type="text" placeholder="" class="form-control" formControlName="titre"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Type</label>
+                                        <select class="form-control" formControlName="type">
+                                            <option *ngFor="let c of missionType"
+                                                    value="{{c.id}}">{{c.missionTypeTitle}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Date de début</label>
+                                        <input type="date" placeholder="" class="form-control" formControlName="date"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Date de fin</label>
+                                        <input type="date" placeholder="" class="form-control"
+                                               formControlName="dateFin"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Nombre de profils</label>
+                                        <input type="number" min="1" max="99" placeholder="" class="form-control"
+                                               formControlName="nombre"/></div>
+                                    <div class="form-group">
+                                        <label class="control-label">Description</label>
+                                        <textarea class="form-control" rows="3" placeholder=""
+                                                  formControlName="description"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane active" *ngIf="menu==2">
+                            <div class="row">
+                                <div class="portlet">
+                                    <div class="portlet-body">
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
+                                            <form>
+                                                <div class="form-group">
+                                                    <label class="control-label">Catégorie</label>
+                                                    <select class="form-control" [value]="0"
+                                                            (change)="selectCategory($event.target['value'])">
+                                                        <option value="0">Choisir Category</option>
+                                                        <option *ngFor="let c of skillCategories"
+                                                                value="{{c.id}}">{{c.skillCategoryTitle}}</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
+                                            <form>
+                                                <div class="form-group">
+                                                    <a *ngFor="let c of skills">
+                                                    <span class="badge badge-pill badge-success font-medium-2"
+                                                          style="color: black; margin-bottom: 1%"
+                                                          (click)="showPop(addCandidateSkill);changeActionAE(1);changeIdSkill(c.id);clearFormSkill()"><i
+                                                            class="{{(c.skillIcon?c.skillIcon:iconSkill)}}"
+                                                            style="color: white"></i> {{c.skillTitle}}</span>
+                                                    </a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <table class="table table-hover" *ngIf="mission">
+                                            <thead>
+                                            <tr>
+                                                <th> Titre</th>
+                                                <th> Gatégorie</th>
+                                                <th> Note</th>
+                                                <th> Expérience</th>
+                                                <th> Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let c of mission.missionSkillsDetails">
+                                                <td>{{c.skills.skillTitle}}</td>
+                                                <td>{{c.skills.skillCategoryTitle}}</td>
+                                                <td> {{c.missionSkillGrade}} </td>
+                                                <td>{{c.missionSkillExperience}}  </td>
+                                                <td>
+                                                    <a><i class="fa fa-edit"
+                                                          (click)="showPop(addCandidateSkill);changeActionAE(2);changeIdSkill(c.skills.id);fillinSkill()"></i></a>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <a><i class="fa fa-trash-o" style="color: red"
+                                                          (click)="showPop(deleteTemplate);changeIdSkill(c.skills.id);changeDeleteIndex(1)"></i></a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END Technical Skills TAB -->
+                        <!-- Managerials Skills TAB -->
+                        <div class="tab-pane" *ngIf="menu==3">
+                            <div class="portlet light">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-list font-green-sharp"></i>
+                                        <span class="caption-subject font-green-sharp sbold">Capacités managerielles</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
+                                            <form>
+                                                <div class="form-group">
+                                                    <label class="control-label">Catégorie</label>
+                                                    <select class="form-control"
+                                                            (change)="selectCategoryManagerial($event.target['value'])"
+                                                            [value]="0">
+                                                        <option value="0">Choisir Category</option>
+                                                        <option *ngFor="let c of managerialAbilities"
+                                                                value="{{c.id}}">{{c.managerialAbilityCategoryTitle}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div>
+                                                        <a *ngFor="let c of managerials">
+                                                    <span class="badge badge-pill badge-success font-medium-2 spanManager"
+                                                          (click)="showPop(cuManagerial);changeActionAE(1);changeIdManagerial(c.id);clearFormManagerial()"> {{c.managerialAbilityTitle}}</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-8 col-sm-12 col-xs-12">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th> Titre</th>
+                                                    <th> Gatégorie</th>
+                                                    <th> Note</th>
+                                                    <th> Fiabilté</th>
+                                                    <th> Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr *ngFor="let c of mission.missionManagerialAbilitiesDetails">
+                                                    <td>{{c.managerialAbilities.managerialAbilityTitle}}</td>
+                                                    <td>{{c.managerialAbilities.managerialAbilityCategoryTitle}}</td>
+                                                    <td>{{c.missionManagerialAbilitiesGrade}}</td>
+                                                    <td>{{c.missionManagerialAbilitiesReliability}}</td>
+                                                    <td>
+                                                        <a (click)="showPop(cuManagerial);changeActionAE(2);changeIdManagerial(c.managerialAbilities.id);fillinManagerial();"><i
+                                                                class="fa fa-edit"></i></a>
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <a (click)="showPop(deleteTemplate);changeDeleteIndex(2);changeIdManagerial(c.managerialAbilities.id)"><i
+                                                                class="fa fa-trash-o" style="color: red"></i></a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-list font-green-sharp"></i>
+                                        <span class="caption-subject font-green-sharp sbold">Langues</span>
+                                    </div>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="row">
+                                                <div class="col-md-4" *ngFor="let c of languages">
+                                                    <div class="flag-wrapper">
+                                                        <div class="img-thumbnail flag flag-icon-background flag-icon-{{c.languageFlag}}"
+                                                             title="ad" id="flag"
+                                                             (click)="changeActionAE(1);showPop(cuLanguage);changeIdCandidateLanguage(c.id);changeLanguageFlag(c.languageFlag);changeLanguageName(c.languageName);clearFormLanguage()"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <table class="table table-hover tlangue" style="margin: auto">
+                                                <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th> Langue</th>
+                                                    <th> Niveau</th>
+                                                    <th> Maternelle ?</th>
+                                                    <th> Parler</th>
+                                                    <th> Ecrire</th>
+                                                    <th> Lire</th>
+                                                    <th> Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr *ngFor="let c of mission.missionLanguagesDetails">
+                                                    <td>
+                                                        <a class="flag-icon flag-icon-{{c.language.languageFlag}}"></a>
+                                                    </td>
+                                                    <td>{{c.language.languageName}}</td>
+                                                    <td>{{c.missionLanguageLevel}}</td>
+                                                    <td><i class="fa ft-check" *ngIf="c.missionLanguageIsNative"></i>
+                                                    </td>
+                                                    <td>{{c.missionLanguageSpeakingLevel}}</td>
+                                                    <td>{{c.missionLanguageWritingLevel}}</td>
+                                                    <td>{{c.missionLanguageReadingLevel}}</td>
+                                                    <td>
+                                                        <a (click)="changeActionAE(2);changeIdCandidateLanguage(c.language.id);showPop(cuLanguage);fillinLanguage();changeLanguageFlag(c.language.languageFlag);changeLanguageName(c.language.languageName)"><i
+                                                                class="fa ft-edit-2"></i></a>
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <a (click)="showPop(deleteTemplate);changeDeleteIndex(3);changeIdCandidateLanguage(c.language.id)"><i
+                                                                class="fa fa-trash-o" style="color: red"></i></a>
+                                                    </td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" *ngIf="menu==4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <form [formGroup]="formTraining">
+                                        <div class="form-group">
+                                            <label class="control-label">Niveau</label>
+                                            <select class="form-control" formControlName="niveau">
+                                                <option *ngFor="let c of trainingLevel"
+                                                        value="{{c.id}}">{{c.trainingLevelTitle}}</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                    <div class="margin-top-10">
+                                        <a class="btn" style="width: 30%;background-color: #2f4894;color: white"
+                                           *ngIf="actionAE==1" (click)="addTraining();clearFormTraining()">
+                                            Ajouter </a>
+                                        <a class="btn" style="width: 30%;background-color: #2f4894;color: white"
+                                           *ngIf="actionAE==2"
+                                           (click)="addTraining();changeActionAE(1);clearFormTraining()">
+                                            Modifier </a>
+                                        <a class="btn" style="width: 30%;background-color: #d8d8d8;"
+                                           *ngIf="actionAE==2"
+                                           (click)="changeActionAE(1);clearFormTraining()"> Annuler </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="margin: auto">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th> Niveau</th>
+                                            <th> Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let c of mission.missionTrainingLevelDetails">
+                                            <td>{{c.trainingLevel.trainingLevelTitle}}</td>
+                                            <td>
+                                                <a><i class="fa ft-edit changeColorEdit"
+                                                      (click)="changeActionAE(2);changeIdTraining(c.trainingLevel.id);fillinTraining()"></i></a>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <a><i class="fa fa-trash-o" style="color: red"
+                                                      (click)="showPop(deleteTemplate);changeDeleteIndex(4);changeIdTraining(c.trainingLevel.id)"></i></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" *ngIf="menu==5">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <form [formGroup]="formTag">
+                                        <div class="form-group">
+                                            <label class="control-label">Tag</label>
+                                            <select class="form-control" formControlName="tag">
+                                                <option value="{{c.id}}" *ngFor="let c of tags">{{c.tagTitle}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="margin-top-10">
+                                            <a class="btn" style="width: 30%;background-color: #2f4894;color: white"
+                                               *ngIf="actionAE==1" (click)="addTags();clearFormTag()"> Ajouter </a>
+                                            <a class="btn" style="width: 30%;background-color: #2f4894;color: white"
+                                               *ngIf="actionAE==2" (click)="addTags();clearFormTag();changeActionAE(1)">
+                                                Modifier </a>
+                                            <a class=" btn" style="width: 30%;background-color: #d8d8d8"
+                                               *ngIf="actionAE==2"
+                                               (click)="changeActionAE(1);clearFormTag()">
+                                                Annuler </a>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-6" style="margin: auto">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th> Tag</th>
+                                            <th> Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let c of mission.missionTagsDetails">
+                                            <td>{{c.tag.tagTitle}}</td>
+                                            <td>
+                                                <a><i class="fa fa-edit"
+                                                      (click)="changeActionAE(2);changeIdTag(c.tag.id);fillinTag()"></i></a>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <a><i class="fa fa-trash-o" style="color: red"
+                                                      (click)="changeDeleteIndex(5);changeIdTag(c.tag.id);showPop(deleteTemplate)"></i></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <a (click)="prevMenu()" class="btn green-haze"
+                   style="background-color: #2f4894;color: white;bottom: 30px;"> Annuler </a>
+            </div>
+            <div class="col-md-6" *ngIf="localstorageSuivant()">
+                <a (click)="localstorageSuivant()?nextMenu():addMission()" class="btn" *ngIf="localstorageSuivant() && menu!=5"
+                   style="background-color: #2f4894;color: white;bottom: 30px;float: right"> {{localstorageSuivant() ? 'Suivant' : 'Enregistrer'}} </a>
+                <a *ngIf="menu == 5" class="btn" (click)="navigateComplete()" style="background-color: #2f4894;color: white;bottom: 30px;float: right">Confirmer</a>
+            </div>
+            <div class="col-md-6" *ngIf="!localstorageSuivant()">
+                <a class="btn" (click)="addMission()" style="background-color: #2f4894;color: white;bottom: 30px;float: right">Enregistrer</a>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #addCandidateSkill>
+    <form [formGroup]="formMissionSkill">
+        <div class="modal-header">
+            <h4 class="modal-title"><i class="" style="font-size: 22px;"></i></h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Note</label>
+                        <input formControlName="note" type="number" min="0" max="5" class="form-control"></div>
+                    <div class="form-group">
+                        <label class="control-label">Expérience</label>
+                        <input formControlName="experience" type="number" min="0" max="100" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" *ngIf="actionAE==1"
+                (click)="addCandidateSkillFonction()">Ajouter
+        </button>
+        <button type="button" class="btn btn-success" *ngIf="actionAE==2"
+                (click)="addCandidateSkillFonction()">Modifier
+        </button>
+        <button type="button" class="btn btn-default" (click)="modelRef.hide()">Annuler</button>
+    </div>
+</ng-template>
+<ng-template #deleteTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title">Merci de confirmer</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                Êtes-vous certain de vouloir supprimer?
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="delete()">Confirmer</button>
+        <button type="button" class="btn btn-default" (click)="modelRef.hide()">Annuler</button>
+    </div>
+</ng-template>
+<ng-template #cuManagerial>
+    <div class="modal-header">
+        <h4 class="modal-title"><i class="" style="font-size: 22px;"></i></h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <form [formGroup]="formManagerial">
+                    <div class="form-group">
+                        <label class="control-label">Note</label>
+                        <input type="number" min="0" max="5" class="form-control" formControlName="note">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Fiabilité</label>
+                        <input formControlName="fiabilite" type="number" min="0" max="100"
+                               class="form-control"/></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" *ngIf="actionAE==1"
+                (click)="addManagerial();">Ajouter
+        </button>
+        <button type="button" class="btn btn-success" *ngIf="actionAE==2"
+                (click)="addManagerial();">Modifier
+        </button>
+        <button type="button" class="btn btn-default" (click)="modelRef.hide()">Annuler</button>
+    </div>
+</ng-template>
+<ng-template #cuLanguage>
+    <div class="modal-header">
+        <h2 class="modal-title"><span class="flag-icon flag-icon-{{languageFlag}}"></span><span
+                style="margin-left: 2%">{{languageName}}</span></h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <form [formGroup]="formLanguage">
+                    <div class="form-group">
+                        <label class="control-label">Niveau</label>
+                        <select class="form-control" formControlName="niveau">
+                            <option value="Débutant absolu">Débutant absolu</option>
+                            <option value="Notions basiques">Notions basiques
+                            </option>
+                            <option value="Intermédiaire moyen-faible">Intermédiaire
+                                moyen-faible
+                            </option>
+                            <option value="Intermédiaire moyen-fort ">Intermédiaire
+                                moyen-fort
+                            </option>
+                            <option value="Avancé">Avancé</option>
+                            <option value="Parfaite maîtrise">Parfaite maîtrise
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox-list">
+                            <label>
+                                <input type="checkbox" formControlName="etrangere" value=""> Maternelle ? </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Niveau de communication</label>
+                        <input type="number" min="0" max="5" class="form-control" formControlName="communication">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Niveau de lecture</label>
+                        <input type="number" min="0" max="5" class="form-control" formControlName="lecture"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Niveau d'ecriture</label>
+                        <input type="number" min="0" max="5" class="form-control" formControlName="ecriture"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="addLanguage()" *ngIf="actionAE==1">Ajouter</button>
+        <button type="button" class="btn btn-success" (click)="addLanguage()" *ngIf="actionAE==2">Modifier</button>
+        <button type="button" class="btn btn-default" (click)="modelRef.hide()">Annuler</button>
+    </div>
+</ng-template>

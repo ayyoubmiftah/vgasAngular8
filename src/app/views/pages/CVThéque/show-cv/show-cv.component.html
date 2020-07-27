@@ -1,0 +1,245 @@
+<div>
+  <nav style="height: 90px;" aria-label="breadcrumb">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a><i class="icon-settings"></i> Administration</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Détails d'affaires</li>
+          </ul>
+        </div>
+        <div class="col-sm-3">
+          <ul class="hList">
+            <li>
+              <div>
+                <a class="menu">
+                  <h6 class="menu-title">Actions</h6>
+                  <ul class="menu-dropdown">
+                    <li (click)="actionCPop(action)">Nouvelle Action</li>
+                  </ul>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="col-md-12">
+    <div class="row profile">
+      <div class="col-md-3">
+        <div class="profile-sidebar">
+          <!-- SIDEBAR USERPIC -->
+          <div class="profile-userpic">
+            <img [src]="'data:image/png;base64,'+cv?.candidateAvatar" class="img-responsive" alt="">
+          </div>
+          <!-- END SIDEBAR USERPIC -->
+          <!-- SIDEBAR USER TITLE -->
+          <div class="profile-usertitle">
+            <div class="profile-usertitle-name">
+              {{cv?.candidateProfileTitle}}
+            </div>
+            <div class="profile-usertitle-name">
+              {{cv?.candidateFirstName}} {{cv?.candidateLastName}}
+            </div>
+            <div class="profile-usertitle-job">
+              {{cv?.candidateAddress}}
+            </div>
+          </div>
+          <!-- END SIDEBAR USER TITLE -->
+          <!-- SIDEBAR BUTTONS -->
+          <div class="profile-userbuttons">
+            <button type="button" class="btn btn-success btn-sm" (click)="navigatePage(cv.id)">Modifie</button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteCPop(detail)">Supprimer</button>
+          </div>
+
+          <!-- END PORTLET MAIN -->
+
+
+          <!-- END SIDEBAR BUTTONS -->
+          <!-- SIDEBAR MENU -->
+          <div class="profile-usermenu">
+            <ul class="nav">
+              <li class="active">
+                <a>
+                  <i class="fas fa-home"></i>
+                  Vue d'ensemble </a>
+              </li>
+            </ul>
+          </div>
+          <!-- END MENU -->
+          <!-- PORTLET MAIN -->
+          <div class="portlet light">
+            <!-- STAT -->
+            <div class="row list-separated profile-stat">
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <div class="uppercase profile-stat-title"> {{cv?.missionIds.length}} </div>
+                <div class="uppercase profile-stat-text"> Missions</div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <div class="uppercase profile-stat-title"> {{cv?.actionIds.length}} </div>
+                <div class="uppercase profile-stat-text" style="margin-right: 18%;"> Actions</div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <div class="uppercase profile-stat-title"> {{cv?.candidatesSkillsDetails.length}} </div>
+                <div class="uppercase profile-stat-text" style="margin-right: -30%;"> COMPÉTENCES</div>
+              </div>
+            </div>
+            <!-- END STAT -->
+            <div>
+              <h4 class="profile-desc-title">{{cv?.candidateAbout}}</h4>
+              <h2 class="profile-desc-text ng-binding"> {{cv?.availability}} </h2>
+              <div class="margin-top-20 profile-desc-link" style="margin-left: 3%">
+                <i class="fa fa-phone fa-lg"></i>
+                {{cv?.candidateMobileNo}}
+              </div>
+              <div class="margin-top-20 profile-desc-link ng-binding" style="margin-left: 3%">
+                <i class="fas fa-at fa-lg"></i>
+                {{cv?.candidateEmail}}
+              </div>
+            </div>
+          </div>
+          <!-- END PORTLET MAIN -->
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="profile-content">
+          <!-- BEGIN PORTLET -->
+          <div class="portlet light ">
+            <div class="portlet-title">
+              <div class="caption caption-md">
+                <i class="icon-bar-chart theme-font hide"></i>
+                <span class="caption-subject font-blue-madison bold uppercase">Activités Récentes</span>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="table-scrollable table-scrollable-borderless">
+                <table class="table table-hover table-light">
+                  <thead>
+                  <tr class="uppercase">
+                    <th> Titre<p></p>...</th>
+                    <th> date de<p></p> création</th>
+                    <th> date <p></p>d'estimation</th>
+                    <th> Statut<p></p>...</th>
+                    <th> CHIFFRE D'AFFAIRE<p></p> POTENTIAL</th>
+                    <th> CHIFFRE D'AFFAIRE<p></p> RÉEL</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let c of business">
+                    <td>
+                      <a class="primary-link"></a>{{c.businessTitle}} </td>
+                    <td>
+                      <a class="primary-link">{{c.createdDate}}</a>
+                    </td>
+                    <td>
+                      <a class="primary-link">{{c.businessEstimatedDate}}</a>
+                    </td>
+                    <td><span class="label label-sm label-info"> {{c.businessStatuTitle}} </span></td>
+                    <td> {{c.potentialTurnover}} </td>
+                    <td> {{c.realTurnover}} </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div *ngIf="showPages">
+                <app-pagination [numberOfItems]="numberOfItems"
+                                [itemsPerPage]="itemsPerPage"
+                                [totalItems]="totalElements"
+                                [totalPages]="totalPages"
+                                (onpageChanged)="pageChanged($event)"></app-pagination>
+              </div>
+            </div>
+          </div>
+          <!-- END PORTLET -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<ng-template #detail>
+  <div class="modal-header">
+    <h4 class="modal-title">Suppression</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modelRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Voulez-vous vraiment supprimer ce Candidat ?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modelRef.hide()">fermer</button>
+    <button type="button" class="btn btn-primary" (click)="deleteC()">Ok</button>
+  </div>
+</ng-template>
+<ng-template #action>
+  <div class="modal-header">
+    <h4 class="modal-title">Nouvelle Action</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- TASK HEAD -->
+        <div class="form">
+          <!-- TASK TITLE -->
+          <div class="form-group">
+            <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Titre ..." [(ngModel)]="title"></div>
+          <!-- TASK DESC -->
+          <div class="form-group">
+            <textarea class="form-control todo-taskbody-taskdesc" rows="2" placeholder="Description ..." [(ngModel)]="comment"></textarea>
+          </div>
+          <!-- END TASK DESC -->
+          <!-- TASK DUE DATE -->
+          <div class="form-group">
+            <div class="input-icon">
+              <i class="fa fa-calendar"></i>
+              <input type="date" class="form-control todo-taskbody-due" placeholder="Date de début ..." [(ngModel)]="fencedDate"></div>
+          </div>
+          <!-- TASK DUE DATE -->
+          <div class="form-group">
+            <div class="input-icon">
+              <i class="fa fa-calendar"></i>
+              <input type="date" class="form-control todo-taskbody-due" placeholder="Date de fin ..." [(ngModel)]="deadlineDate"></div>
+          </div>
+          <!-- TASK Priority -->
+          <div class="form-group">
+            <select class="form-control" [(ngModel)]="priority">
+              <option value="0" [disabled]="true">Priorité....</option>
+              <option value="Urgent">Urgent</option>
+              <option value="Important">Important</option>
+              <option value="Normal">Normal</option>
+            </select></div>
+
+          <!-- TASK Status -->
+          <div class="form-group">
+            <select class="form-control" [(ngModel)]="responsibleString" (change)="changeResponsibleString()">
+              <option value="0" [disabled]="true">Responsable....</option>
+              <option value="candidates">Candidat</option>
+              <option value="sourcers">Partenaire</option>
+              <option value="customers">Client</option>
+              <option value="contacts">Cantact</option>
+            </select></div>
+          <div class="form-group">
+            <label>{{titleFieldDropdown}}</label>
+            <ng-multiselect-dropdown
+              [disabled]="titleFieldDropdown=='selectionner Responsable'"
+              [placeholder]="'Selectionner .....'"
+              [data]="responsibleIdSelect"
+              [(ngModel)]="responsibleId"
+              [settings]="dropdownSettings">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Category ..." [(ngModel)]="category"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn green" (click)="addAction()">Ajouter</button>
+    <button type="button" class="btn btn-default" (click)="modelRef.hide()">Annuler</button>
+  </div>
+</ng-template>

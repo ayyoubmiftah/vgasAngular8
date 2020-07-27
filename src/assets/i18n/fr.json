@@ -1,0 +1,55 @@
+{
+  "is already exist": "est déja existé",
+  "appTitle": "PROJECT_NAME",
+  "loading": "Loading ...",
+  "logout": "Logout",
+  "menu": {
+    "contributeur": "Contributeur",
+    "moderateur": "Moderateur",
+    "lecteur": "Lecteur",
+    "admin": "Admin"
+  },
+  "login": {
+    "label-username": "Identifiant",
+    "label-password": "Mot de passe",
+    "button-login": "Se connecter",
+    "placeholders": {
+      "username": "identifiant ...",
+      "password": "mot de passe ..."
+    },
+    "error-no-token-sent": "Token non envoyé depuis le service lors de l'authentification",
+    "error-user-unauthorized": "L'utilisateur n'est pas autorisé"
+  },
+  "QUALITY_OF_ALIMENTATION": "Qualité d'alimentation",
+  "INTERVENTION_NOT_CARRIED_OUT": "Intervention non réalisée",
+  "METER_NOT_POSED": "Compteur non posé",
+  "CONNECTION": "Branchement",
+  "WATER_LEAK": "Fuite d'eau",
+  "INVOICE": "Facture",
+  "CUT": "Coupure",
+  "OTHER": "Autre",
+  "executor": {
+    "EXECUTOR_ADDED": "Intervenant ajouté avec succés",
+    "LAST_NAME": "Nom",
+    "FIRST_NAME": "Prénom",
+    "username": "Identifiant",
+    "ADDRESS": "Adresse",
+    "MOBILE": "Téléphone",
+    "ARE_YOU_SURE_YOU_WANT_TO_DELETE_EXECUTOR": "Êtes-vous sûr de vouloir supprimer cet intervenant",
+    "JOB_EXECUTOR_DELETED": "Vous avez supprimé cet intervenant avec succés",
+    "ADD_NEW_EXECUTOR": "Ajouter un nouvel intervenant",
+    "EDIT_EXECUTOR": "Modifier l'intervenant",
+    "EXECUTOR_UPDATED": "Vous avez modifié cet intervenant avec succés"
+  },
+  "team": {
+    "ADD_NEW_TEAM": "Ajouter une nouvelle équipe",
+    "EDIT_TEAM": "Modifier l'équipe",
+    "TEAM_ADDED": "équipe ajoutée",
+    "ARE_YOU_SURE_YOU_WANT_TO_DELETE_TEAM": "Êtes-vous sûr de vouloir supprimer cette équipe",
+    "TEAM_DELETED": "équipe supprimée",
+    "TEAM_UPDATED": "équipe modifiée"
+  },
+  "YES_I_AM_SURE": "Oui, Je suis sûr!",
+  "THIS_ACTION_IS_IRREVERSIBLE": "Cette action est irréversible",
+  "THE_PROFILE_NAME_IS_REQUIRED": "Ce champ est obligatoire"
+}

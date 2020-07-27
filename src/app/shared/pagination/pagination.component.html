@@ -1,0 +1,17 @@
+<div class="row align-items-center">
+  <div class="col-xs-6 col-6">
+    <strong *ngIf="totalPages">Affichès {{numberOfItems + ' / ' + totalItems}} entrées</strong>
+  </div>
+  <div class="col-xs-6 col-6 doNotPrint">
+    <pagination [totalItems]="totalItems"
+                [(ngModel)]="currentPage"
+                [class]="pageBtnClass + ' pull-right'"
+                [align]="align"
+                [disabled]="disabled"
+                [maxSize]="maxSize"
+                [previousText]="'prev'"
+                [nextText]="'next'"
+                [itemsPerPage]="itemsPerPage"
+                (pageChanged)="pageChanged($event)"></pagination>
+  </div>
+</div>

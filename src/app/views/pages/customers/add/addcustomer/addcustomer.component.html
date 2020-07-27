@@ -1,0 +1,104 @@
+<div>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a><i class="icon-settings"></i> Administration</a></li>
+            <li class="breadcrumb-item active" aria-current="page" *ngIf="id==null">Nouveau Client</li>
+            <li class="breadcrumb-item active" aria-current="page" *ngIf="id!=null">Modifier Client</li>
+        </ul>
+    </nav>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-muted" *ngIf="id==null">Nouveau Client</h4>
+                <h4 class="card-title text-muted" *ngIf="id!=null">Modifier Client</h4>
+
+                <div class="portlet light">
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form role="form" [formGroup]="formCustomer">
+                                    <div class="form-group">
+                                        <label class="control-label">Nom</label>
+                                        <input formControlName="nom" type="text" placeholder="" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Tél</label>
+                                        <input formControlName="tel" type="text" placeholder="" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Fax</label>
+                                        <input formControlName="fax" type="text" placeholder="" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Adresse</label>
+                                        <textarea formControlName="adresse" class="form-control" rows="3"
+                                                  placeholder=""></textarea></div>
+                                    <div class="form-group">
+                                        <label class="control-label">Domaine d'activité</label>
+                                        <select class="form-control" formControlName="field">
+                                            <option value="">Séléctionner une valeur</option>
+                                            <option *ngFor="let c of fields"
+                                                    value="{{c.id}}">{{c.fieldOfActivityTitle}}
+                                            </option>
+                                        </select></div>
+                                    <div class="form-group">
+                                        <label class="control-label">Classement</label>
+                                        <input formControlName="classement" type="number" min="0" max="5" placeholder=""
+                                               class="form-control"/></div>
+                                    <div class="form-group">
+                                        <label class="control-label">Description</label>
+                                        <textarea formControlName="description" class="form-control" rows="3"
+                                                  placeholder=""></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="margiv-top-10">
+                                            <a (click)="addCustomer()" class="btn green-haze" style="background-color: #1877f2;color: #e4e6eb;" *ngIf="id==null">
+                                                Enregistrer </a>
+                                            <a (click)="addCustomer()" class="btn green-haze" style="background-color: #1877f2;color: #e4e6eb;" *ngIf="id!=null">
+                                                Modifier </a>
+                                        </div>
+                                        <div class="margiv-top-10" style="margin-left: 50px">
+                                            <a (click)="location.back()" class="btn green-haze" *ngIf="id!=null">
+                                                Annuler </a>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-md-4">
+                              <div style="margin: 27px 15px">
+                                <input type="file" class="btn btn-info" *ngIf="id==undefined"
+                                       (change)="showPop(cropedImage);fileChangeEvent($event)"/>
+                                <div class="col-sm-12"><img [src]="croppedImage" width="94%" height="60%" style="margin: 16px 15px"/>
+                                  <div class="upload-btn-wrapper" *ngIf="id!=undefined">
+                                    <button class="btn">Editer</button>
+                                    <input type="file" name="myfile" (change)="showPop(cropedImage);fileChangeEvent($event)"/>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #cropedImage>
+  <div class="modal-header">
+    <h4 class="modal-title">Merci de confirmer</h4>
+  </div>
+  <div class="modal-body">
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="3/3"
+      [resizeToWidth]="256"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+    ></image-cropper>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="modelRef.hide()">Ok</button>
+  </div>
+</ng-template>

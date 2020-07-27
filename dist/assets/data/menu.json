@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Admin",
+    "action": "/admin",
+    "icon": "fa-user",
+    "i18n": "menu.admin"
+  },
+  {
+    "title": "Account",
+    "action": "/account",
+    "i18n": "menu.account"
+  },
+  {
+    "title": "Services",
+    "action": "/my-services",
+    "i18n": "menu.services"
+  },
+  {
+    "title": "Consumption",
+    "action": "/consumption",
+    "i18n": "menu.consumption"
+  }
+]

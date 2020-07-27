@@ -1,0 +1,1070 @@
+<div>
+  <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item"><a><i class="icon-settings"></i> Administration</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Panneau de configuration</li>
+    </ul>
+  </nav>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-muted">Panneau de configuration</h4>
+        <div class="row">
+          <div class="col-md-9"></div>
+          <div class="col-md-3">
+            <ng-multiselect-dropdown
+              [placeholder]="'Selectionner .....'"
+              [data]="shortlistSelect"
+              [(ngModel)]="selectedItems"
+              [settings]="dropdownSettings"
+              (onSelect)="onItemSelect($event)"
+              (onDeSelect)="onItemDeselect($event)"
+              (onSelectAll)="onSelectAll()"
+              (onDeSelectAll)="onItemDeselectAll()">
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+
+        <div class="row" style="overflow-y: scroll;height: 32rem;">
+          <div class="col-md-6 col-sm-6" *ngIf="div1">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Entreprises </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionCompany=1;showCompany=true;clearCompany()">
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column"
+                >
+                  <tbody>
+                  <tr *ngFor="let c of companies">
+                    <td title="'Nom'">{{c.companyName}}</td>
+                    <td title="'Pays'">{{c.companyCountry}}</td>
+                    <td title="'Ville'">{{c.companyCity}}</td>
+                    <td title="'Adresse'">{{c.companyAddress}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionCompany=2;company = c;showCompany=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=1;company.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showCompany">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Nom</span>
+                      <input type="text" class="form-control"
+                             placeholder="Nom" [(ngModel)]="company.companyName">
+                    </div>
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Pays</span>
+                      <select class="form-control" [(ngModel)]="company.companyCountry">
+                        <option>selectionner ....</option>
+                        <option *ngFor="let c of paysSelect">{{c.name}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Ville</span>
+                      <input type="text" class="form-control" placeholder="Ville"
+                             [(ngModel)]="company.companyCity"
+                      />
+                    </div>
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Adresse</span>
+                      <input type="text" class="form-control" placeholder="Adresse"
+                             [(ngModel)]="company.companyAddress"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addCompany();showCompany=false" *ngIf="actionCompany==1"
+                            type="button" class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editCompany();showCompany=false" *ngIf="actionCompany==2"
+                            type="button" class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showCompany=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <div *ngIf="div2" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Écoles & Universités </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionSchool=1;showSchool=true;clearSchool()"
+                  >
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of schools">
+                    <td title="'Nom'">{{c.schoolName}}</td>
+                    <td title="'Pays'">{{c.schoolCountry}}</td>
+                    <td title="'Ville'">{{c.schoolCity}}</td>
+                    <td title="'Adresse'">{{c.schoolAddress}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionSchool=2;school = c;showSchool=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=2;school.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showSchool">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Nom</span>
+                      <input type="text" class="form-control"
+                             placeholder="Nom" [(ngModel)]="school.schoolName">
+                    </div>
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Pays</span>
+                      <select class="form-control" [(ngModel)]="school.schoolCountry">
+                        <option>selectionner ....</option>
+                        <option *ngFor="let c of paysSelect">{{c.name}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Ville</span>
+                      <input type="text" class="form-control" placeholder="Ville"
+                             [(ngModel)]="school.schoolCity"
+                      />
+                    </div>
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Adresse</span>
+                      <input type="text" class="form-control" placeholder="Adresse"
+                             [(ngModel)]="school.schoolAddress"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addSchool();showSchool=false" *ngIf="actionSchool==1"
+                            type="button" class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editSchool();showSchool=false" *ngIf="actionSchool==2"
+                            type="button" class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showSchool=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <!-- </div>
+          <div class="row"> -->
+          <div *ngIf="div3" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Tags </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionTag=1;showTag=true;clearTag()"
+                  >
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of tags">
+                    <td title="'Nom'">{{c.tagTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionTag=2;tag = c;showTag=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=3;tag.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showTag">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Titre</span>
+                      <input type="text" class="form-control"
+                             placeholder="Titre" [(ngModel)]="tag.tagTitle">
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addTag();showTag=false" *ngIf="actionTag==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editTag();showTag=false" *ngIf="actionTag==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showTag=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <div *ngIf="div4" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Domaines de certification </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionCertification=1;showCertification=true;clearCertification()"
+                  >
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of certifications">
+                    <td title="'Nom'">{{c.certificationDomainTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionCertification=2;certification = c;showCertification=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=3;certification.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showCertification">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Titre</span>
+                      <input type="text" class="form-control"
+                             placeholder="Titre" [(ngModel)]="certification.certificationDomainTitle">
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addCertification();showCertification=false"
+                            *ngIf="actionCertification==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editCertification();showCertification=false"
+                            *ngIf="actionCertification==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showCertification=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <!-- </div>
+          <div class="row"> -->
+          <div *ngIf="div5" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Deals commercial </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionDeal=1;showDeal=true;clearDeal()"
+                  >
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of deals">
+                    <td title="'Title'">{{c.dealCommercialTitle}}</td>
+                    <td title="'Value'">{{c.value}}</td>
+                    <td title="'Unit'">{{c.unit}}</td>
+                    <td title="'Commentaire'">{{c.dealComercialComment}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionDeal=2;deal = c;showDeal=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=5;deal.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showDeal">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Libelle*</span>
+                      <input type="text" class="form-control"
+                             placeholder="Libelle" [(ngModel)]="deal.dealCommercialTitle">
+                    </div>
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Valeur</span>
+                      <input type="number" class="form-control"
+                             placeholder="Valeur" [(ngModel)]="deal.value">
+                    </div>
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Unité</span>
+                      <input type="text" class="form-control"
+                             placeholder="Unité" [(ngModel)]="deal.unit">
+                    </div>
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Commentaire</span>
+                      <input type="text" class="form-control"
+                             placeholder="Commentaire" [(ngModel)]="deal.dealComercialComment">
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addDeal();showDeal=false" *ngIf="actionDeal==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editDeal();showDeal=false" *ngIf="actionDeal==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showDeal=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <div *ngIf="div6" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Types de mission </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionTypeMission=1;showTypeMission=true;clearTypeMission()"
+                  >
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of typeMissions">
+                    <td title="'Nom'">{{c.missionTypeTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionTypeMission=2;typeMission = c;showTypeMission=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=5;typeMission.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showTypeMission">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Titre</span>
+                      <input type="text" class="form-control"
+                             placeholder="Titre" [(ngModel)]="typeMission.missionTypeTitle">
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addTypeMission();showTypeMission=false"
+                            *ngIf="actionTypeMission==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editTypeMission();showTypeMission=false"
+                            *ngIf="actionTypeMission==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showTypeMission=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <!-- </div>
+          <div class="row"> -->
+          <div *ngIf="div7" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Types d'action </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionTypeAction=1;showTypeAction=true;clearTypeAction()">
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of typeActions">
+                    <td title="'Nom'">{{c.actionTypeTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionTypeAction=2;typeAction = c;showTypeAction=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=6;typeAction.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showTypeAction">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Titre</span>
+                      <input type="text" class="form-control"
+                             placeholder="Titre" [(ngModel)]="typeAction.actionTypeTitle">
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addTypeAction();showTypeAction=false"
+                            *ngIf="actionTypeAction==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editTypeAction();showTypeAction=false"
+                            *ngIf="actionTypeAction==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showTypeAction=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <div *ngIf="div8" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Niveaux de formation </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionTrainingLevel=1;showTrainingLevel=true;clearTrainingLevel()">
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of trainingLevels">
+                    <td title="'Niveau'">{{c.trainingLevelTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionTrainingLevel=2;trainingLevel = c;showTrainingLevel=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=7;trainingLevel.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showTrainingLevel">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Niveau</span>
+                      <input type="text" class="form-control"
+                             placeholder="Niveau" [(ngModel)]="trainingLevel.trainingLevelTitle">
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addTrainingLevel();showTrainingLevel=false"
+                            *ngIf="actionTrainingLevel==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editTrainingLevel();showTrainingLevel=false"
+                            *ngIf="actionTrainingLevel==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showTrainingLevel=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <!-- </div>
+          <div class="row"> -->
+          <div *ngIf="div9" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Statuts de mission </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionMissionStatu=1;showMissionStatu=true;clearMissionStatu()"
+                  >
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of missionStatus">
+                    <td title="'Statut'">{{c.missionStatusTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionMissionStatu=2;missionStatu = c;showMissionStatu=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=8;missionStatu.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showMissionStatu">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Status</span>
+                      <input type="text" class="form-control"
+                             placeholder="Status" [(ngModel)]="missionStatu.missionStatusTitle">
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addMissionStatu();showMissionStatu=false"
+                            *ngIf="actionMissionStatu==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editMissionStatu();showMissionStatu=false"
+                            *ngIf="actionMissionStatu==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showMissionStatu=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <div *ngIf="div10" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Statuts d'affaire </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionAffaireStatu=1;showAffaireStatu=true;clearAffaireStatu()"
+                  >
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of affaireStatus">
+                    <td title="'Statut'">{{c.businessStatusTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionAffaireStatu=2;affaireStatu = c;showAffaireStatu=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=9;affaireStatu.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showAffaireStatu">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Status</span>
+                      <input type="text" class="form-control"
+                             placeholder="Status" [(ngModel)]="affaireStatu.businessStatusTitle">
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addAffaireStatu();showAffaireStatu=false"
+                            *ngIf="actionAffaireStatu==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editAffaireStatu();showAffaireStatu=false"
+                            *ngIf="actionAffaireStatu==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showAffaireStatu=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <!-- </div>
+          <div class="row"> -->
+          <div *ngIf="div11" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Statuts de action </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionActionStatu=1;showActionStatu=true;clearActionStatu()"
+                  >
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of actionStatus">
+                    <td title="'Statut'">{{c.actionStatusTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionActionStatu=2;actionStatu = c;showActionStatu=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=10;affaireStatu.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showActionStatu">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Status</span>
+                      <input type="text" class="form-control"
+                             placeholder="Status" [(ngModel)]="actionStatu.actionStatusTitle">
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addActionStatu();showActionStatu=false"
+                            *ngIf="actionActionStatu==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editActionStatu();showActionStatu=false"
+                            *ngIf="actionActionStatu==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showActionStatu=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <div *ngIf="div12" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Categories de compétence </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionSkillCategory=1;showSkillCategory=true;clearSkillCategory()">
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of skillCategories">
+                    <td title="'Catégorie'">{{c.skillCategoryTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionSkillCategory=2;skillCategory = c;showSkillCategory=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=11;skillCategory.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showSkillCategory">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Catégorie</span>
+                      <input type="text" class="form-control"
+                             placeholder="Catégorie"
+                             [(ngModel)]="skillCategory.skillCategoryTitle">
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addSkillCategory();showSkillCategory=false"
+                            *ngIf="actionSkillCategory==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editSkillCategory();showSkillCategory=false"
+                            *ngIf="actionSkillCategory==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showSkillCategory=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <!-- </div>
+          <div class="row"> -->
+          <div *ngIf="div13" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span
+                    class="caption-subject font-green sbold uppercase"> Categories de capacités managerielles </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionManagerialAbility=1;showManagerialAbility=true;clearManagerialAbility()">
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of managerialAbilities">
+                    <td title="'Catégorie'">{{c.managerialAbilityCategoryTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionManagerialAbility=2;managerialAbility = c;showManagerialAbility=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=12;managerialAbility.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showManagerialAbility">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Catégorie</span>
+                      <input type="text" class="form-control"
+                             placeholder="Catégorie"
+                             [(ngModel)]="managerialAbility.managerialAbilityCategoryTitle">
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addManagerialAbility();showManagerialAbility=false"
+                            *ngIf="actionManagerialAbility==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editManagerialAbility();showManagerialAbility=false"
+                            *ngIf="actionManagerialAbility==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showManagerialAbility=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <div *ngIf="div14" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Langues </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionCompany=1;showCompany=true;clearCompany()">
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of languages">
+                    <td title="'Catégorie'">{{c.languageName}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionManagAbility=2;managAbility = c;showManagAbility=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=13;managAbility.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <!-- </div>
+          <div class="row"> -->
+          <div *ngIf="div15" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered" id="form_wizard_3">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Capacités managerielles </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionManagAbility=1;showManagAbility=true;clearManagAbility()"
+                  >
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of managAbilities">
+                    <td title="'Catégorie'">{{c.managerialAbilityTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionManagAbility=2;managAbility = c;showManagAbility=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=13;managAbility.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showManagAbility">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Catégorie</span>
+                      <input type="text" class="form-control"
+                             placeholder="Catégorie"
+                             [(ngModel)]="managAbility.managerialAbilityTitle">
+                    </div>
+                    <div class="form-group form-md-line-input has-info" *ngIf="actionManagAbility==1">
+                      <select class="form-control" [(ngModel)]="managAbility.managAbilCategoryId">
+                        <option value="0">selectionner ....</option>
+                        <option *ngFor="let c of managerialAbilities"
+                                value="{{c.id}}">{{c.managerialAbilityCategoryTitle}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addManagAbility();showManagAbility=false"
+                            *ngIf="actionManagAbility==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editManagAbility();showManagAbility=false"
+                            *ngIf="actionManagAbility==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showManagAbility=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <div *ngIf="div16" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Compétences </span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionSkill=1;showSkill=true;clearSkill()">
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of skills">
+                    <td title="'Catégorie'">{{c.skillTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionSkill=2;skill = c;showSkill=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=15;skill.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <app-pagination [showPagination]="true"
+                                [numberOfItems]="numberOfItems"
+                                [itemsPerPage]="itemsPerPage"
+                                [totalItems]="totalElements"
+                                [totalPages]="totalPages"
+                                [maxSize]="5"
+                                (onpageChanged)="pageChanged($event)">
+                </app-pagination>
+                <div class="portlet-body form" *ngIf="showSkill">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Titre</span><input type="text" class="form-control"
+                             placeholder="Titre"
+                             [(ngModel)]="skill.skillTitle">
+
+                    </div>
+                    <div class="form-group form-md-line-input has-info" *ngIf="actionSkill==1">
+                      <select class="form-control" [(ngModel)]="skill.skillCategoryId">
+                        <option value="0">selectionner ....</option>
+                        <option *ngFor="let c of skillCategories" value="{{c.id}}">{{c.skillCategoryTitle}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addSkill();showSkill=false"
+                            *ngIf="actionSkill==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editSkill();showSkill=false"
+                            *ngIf="actionSkill==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showSkill=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <!-- </div>
+          <div class="row"> -->
+          <div *ngIf="div17" class="col-md-6 col-sm-6">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+              <div class="portlet-title">
+                <div class="caption" style="margin-bottom: 5px;">
+                  <i class=" icon-layers font-green"></i>
+                  <span class="caption-subject font-green sbold uppercase"> Domaines d'activté</span>
+                  <a class="btn btn-circle btn-icon-only btn-success" title="Ajouter" style="height: 20px;width: 20px;"
+                     (click)="actionFieldActivity=1;showFieldActivity=true;clearFieldActivity()"
+                  >
+                    <i class="fa fa-plus" style="position: relative;left: -5px;top: -6px;"></i>
+                  </a></div>
+              </div>
+              <div class="portlet-body">
+                <table show-filter="true"
+                       class="table table-striped table-bordered table-hover table-checkable order-column">
+                  <tbody>
+                  <tr *ngFor="let c of filedActivities">
+                    <td title="'Catégorie'">{{c.fieldOfActivityTitle}}</td>
+                    <td style="white-space: nowrap">
+                      <a (click)="actionFieldActivity=2;filedActivity = c;showFieldActivity=true"><i
+                        class="far fa-edit"></i></a>
+                      <a (click)="actionDelete=14;filedActivity.id = c.id;showPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="portlet-body form" *ngIf="showFieldActivity">
+                  <div class="form-body">
+                    <div class="form-group form-md-line-input has-info">
+                      <span class="help-block">Catégorie</span><input type="text" class="form-control"
+                             placeholder="Catégorie"
+                             [(ngModel)]="filedActivity.fieldOfActivityTitle">
+
+                    </div>
+                  </div>
+                  <div class="form-actions noborder">
+                    <button (click)="addFieldActivity();showFieldActivity=false"
+                            *ngIf="actionFieldActivity==1" type="button"
+                            class="btn green"
+                            style="background-color: #1877f2;color: #e4effd;font-weight: bold;">
+                      Ajouter
+                    </button>
+                    <button (click)="editFieldActivity();showFieldActivity=false"
+                            *ngIf="actionFieldActivity==2" type="button"
+                            class="btn green">
+                      Modifier
+                    </button>
+                    <button type="button" class="btn dark" (click)="showFieldActivity=false" style="background-color: #e4e6eb">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+          </div>
+          <!-- </div> -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #deleteTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title">Merci de confirmer</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        Êtes-vous certain de vouloir supprimer?
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="delete();modelRef.hide()">Confirmer</button>
+    <button type="button" class="btn btn-default" (click)="modelRef.hide()">Annuler</button>
+  </div>
+</ng-template>

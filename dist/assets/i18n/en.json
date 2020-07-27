@@ -1,0 +1,37 @@
+{
+  "appTitle": "PROJECT_NAME",
+  "loading": "Loading ...",
+  "logout": "Logout",
+  "menu": {
+    "contributeur": "Contributeur",
+    "moderateur": "Moderateur",
+    "lecteur": "Lecteur",
+    "admin": "Admin"
+  },
+  "login": {
+    "label-username": "Username",
+    "label-password": "Password",
+    "button-login": "Login",
+    "placeholders": {
+      "username": "Enter username ...",
+      "password": "Enter password ..."
+    },
+    "error-no-token-sent": "Token not sent from service during authentication",
+    "error-user-unauthorized": "The user is not authorized"
+  },
+  "modalMessage": {
+    "yesButton": "Yes",
+    "noButton": "No",
+    "closeButton": "Close"
+  },
+  "validations": {
+    "required": {
+      "name": "The field name is required",
+      "username": "The username is mandatory",
+      "password": "The password is mandatory"
+    },
+    "numeric": {
+      "editorial": "You have to select one editorial value"
+    }
+  }
+}

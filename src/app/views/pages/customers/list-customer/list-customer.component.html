@@ -1,0 +1,63 @@
+<div *ngIf="false">
+  <div [@popOverState]="stateName">
+  <p>Hello! I'm a helpful message.</p>
+</div>
+<button (mouseenter)="toggle()" (mouseleave)="toggle()">Toggle PopOver</button>
+</div>
+<div>
+  <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item"><a ><i class="icon-settings"></i> Administration</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Mes Clients</li>
+    </ul>
+  </nav>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-muted">Mes Clients</h4>
+
+       <!-- <div class="container">
+          <div class="row">
+            <div class="col-sm-3" *ngFor="let c of customers">
+            <div>
+              <img src="assets/images/avatars/{{c.customerAvatar}}" alt="" />
+              <p class="title">{{c.customerFullName}} <br><span class="nbms"> {{c.customerAddress}}</span></p>
+              <div class="overlay"></div>
+              <div class="button button1" ><a  href="/admin/customers/$"><i class="ft-search"></i></a></div>
+              <div class="button button2" (click)="navigatePage(c.id)"><a > <i class="ft-edit-2"></i></a></div>
+            </div>
+              <div>
+                <p class="about"> {{c.customerAbout}} </p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4 spaceBottom" *ngFor="let c of customers">
+              <div class="hovereffect">
+                <img class="img-responsive" [src]="'data:image/png;base64,'+c.customerAvatar"  alt="">
+                <div class="overlay">
+                  <h2>{{c.customerFullName}}</h2>
+                  <h3>{{c.customerMobileNo}}</h3>
+                  <a class="info" (click)="navigateShowC(c.id)"><i class="fa fa-search"></i></a>
+                  <a class="info" (click)="navigatePage(c.id)"><i class="fa fa-edit"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <app-pagination [showPagination]="true"
+                          [numberOfItems]="numberOfItems"
+                          [itemsPerPage]="itemsPerPage"
+                          [totalItems]="totalElements"
+                          [totalPages]="totalPages"
+                          (onpageChanged)="pageChanged($event)"></app-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

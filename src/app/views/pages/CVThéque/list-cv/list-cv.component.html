@@ -1,0 +1,50 @@
+<div>
+  <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item"><a><i class="icon-settings"></i> Administration</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Counsulter la CVThèque</li>
+    </ul>
+  </nav>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-muted">Counsulter la CVThèque</h4>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4" *ngFor="let c of cvt">
+              <div class="card__collection clear-fix">
+                <div class="cards cards--three">
+                  <img [src]="'data:image/png;base64,'+c.candidateAvatar" class="img-responsive" alt="">
+                  <span class="cards--three__rect-1">
+                            <span class="shadow-1">{{c.candidateMobileNo}}</span>
+                    <p>{{c.candidateFirstName}} {{c.candidateLastName}}</p>
+                          <p style="position: absolute;top: 64%;color: #0c0c0c">{{c.candidateEmail}}</p>
+                         </span>
+                  <span class="cards--three__rect-2">
+                          <span class="shadow-2"></span>
+                         </span>
+                  <span class="cards--three__circle"></span>
+                  <ul class="cards--three__list">
+                    <li title="afficher" (click)="navigateshowPage(c.id)"><i class="fa fa-search" style="font-size: medium"></i></li>
+                    <li title="modifier" (click)="navigatePage(c.id)"><i class="fa fa-edit" style="font-size: medium"></i></li>
+                    <li title="supprimer" (click)="deleteCv(c.id)"><i class="fas fa-trash" style="font-size: medium"></i></li>
+                  </ul>
+                </div>
+              </div>
+              <div>
+              </div>
+            </div>
+          </div>
+          <app-pagination [showPagination]="true"
+                          [numberOfItems]="numberOfItems"
+                          [itemsPerPage]="itemsPerPage"
+                          [totalItems]="totalElements"
+                          [totalPages]="totalPages"
+                          (onpageChanged)="pageChanged($event)">
+          </app-pagination>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

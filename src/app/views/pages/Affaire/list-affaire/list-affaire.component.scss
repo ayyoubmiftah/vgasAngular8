@@ -1,0 +1,299 @@
+/* metric tiles above chart in main dashboard */ .metric {
+  background-color: #fff;
+  border: 1px solid #E6E4E7;
+  color: #BBB9BB;
+  // display: block;
+  font-family: 'Roboto', sans-serif;
+  margin: 8px 0px 8px 0px;
+  margin: 0px 0px 0px 0px;
+  margin-bottom: 20px;
+  // min-width: 150px;
+  padding: 6px 10px 12px 10px;
+  position: relative;
+  width: auto;
+  // width: 100%;
+}
+@media (min-width: 30em) {
+  // .tbl-row { width: 100%; display: table; table-layout: fixed; }
+  // .metric { display: table-cell; vertical-align: top;}
+}
+p {
+  font-family: Lato;
+}
+.no-space [class*="span"]{
+  margin-left: 0 !important;
+  width: 25% !important; // This is for 4 elements ONLY in the row
+}
+.metric.blue > hr {background-color: #02DEF6;}
+.metric.dark-blue > hr {background-color: #1BA3DD;}
+.metric.brown > hr {background-color: #795548;}
+.metric.green > hr {background-color: #0BAB0C;}
+.metric.orange > hr {background-color: #F8AA27;}
+.metric.pink > hr {background-color: #DF81F2;}
+.metric.purple > hr {background-color: #642BB6;}
+.metric.red > hr {background-color: #D0021B;}
+.metric.gray > hr {background-color: #EDEFF1;}
+
+.metric > h1 {
+  color: #555;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: normal;
+  margin: 0px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.metric > button {
+  background: none;
+  border: none;
+  color: #BBB9BB;
+  font-size: 16px;
+  font-weight: normal;
+  padding: 3px;
+  position: absolute;
+  right: 8px;
+  top: 2px;
+}
+.metric > h2 {
+  clear: both;
+  color: #363B4E;
+  font-family: 'Roboto', sans-serif;
+  font-size: 28px;
+  font-weight: normal;
+  margin: 5px 5px 0 0;
+  margin-bottom: 60px;
+  display: block;
+  width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.metric > h3 {
+  display: inline-block;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  margin: 0px;
+}
+.metric > hr {
+  background-color: #02DEF6;
+  border: none;
+  height: 8px;
+  margin: 0px;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+}
+/* end metric tiles] */
+
+
+
+/* 15 col bootstrap grid */
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 10px;
+  padding-left: 10px;
+  width: 100%;
+}
+.col-xs-15 {
+  width: 20% !important;
+  float: left;
+}
+@media (min-width: 768px) {
+  .col-sm-15 {
+    width: 20% !important;
+    float: left;
+  }
+}
+@media (min-width: 992px) {
+  .col-md-15 {
+    width: 20% !important;
+    float: left;
+  }
+}
+@media (min-width: 1200px) {
+  .col-lg-15 {
+    width: 20% !important;
+    float: left;
+  }
+}
+/* end 15 col bootstrap grid */
+
+/* no gutter for bs3 grid */
+// .no-gutter [class*="col"] {
+// 	background-color: pink;
+// 	padding-left: 4px !important;
+// 	padding-right:0;
+// 	// width: 30%;
+// }
+.row.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+.row.no-gutters > [class^="col-"],
+.row.no-gutters > [class*=" col-"] {
+  // background-color: pink;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+
+
+
+/* stat box */
+$statBoxGreen: #27AE60;
+$statBoxBlue: #269cd0;
+$statBoxPurple: #865AD8;
+$statBoxPink: #f54ea2;
+$statBoxGrey: #aaa;
+$statBoxOrange: #fd9927;
+.stat-box {
+  background-color: #EDEFF1;
+  border: 1px solid transparent;
+  border-collapse: collapse;
+  border-radius: 2px;
+  display: table;
+  margin: 0 0 30px 0;
+  padding: 0;
+  table-layout: fixed;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  width: 100%;
+
+  > .stat-icon {
+    border-radius: 2px 0px 0px 2px;
+    display: table-cell;
+    padding: 15px 15px;
+    table-layout: fixed;
+    text-align: center;
+    vertical-align: middle;
+    width: 40%;
+  }
+  > .stat-icon > span.icon {
+    color: #fff;
+    font-size: 55px;
+  }
+  > .stat-value {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+  }
+  > .stat-value > .stat-num {
+    display: block;
+    font-size: 36px;
+  }
+  > .stat-value > .stat-num > i {
+    color: #999;
+    font-size: 12px;
+  }
+  > .stat-value > .stat-label {
+    font-size: 14px;
+  }
+  > .stat-value > .stat-label-top {
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  > .stat-value > .stat-label-top > i {
+    font-size: 12px;
+    text-transform: none;
+  }
+  &.green .stat-num {
+    color: $statBoxGreen;
+  }
+  &.green .stat-icon {
+    background-color: $statBoxGreen;
+  }
+  &.blue .stat-num {
+    color: $statBoxBlue;
+  }
+  &.blue .stat-icon {
+    background-color: $statBoxBlue;
+  }
+  &.purple .stat-num {
+    color: $statBoxPurple;
+  }
+  &.purple .stat-icon {
+    background-color: $statBoxPurple;
+  }
+  &.pink .stat-num {
+    color: $statBoxPink;
+  }
+  &.pink .stat-icon {
+    background-color: $statBoxPink;
+  }
+  &.grey .stat-num {
+    color: $statBoxGrey;
+  }
+  &.grey .stat-icon {
+    background-color: $statBoxGrey;
+  }
+  &.orange .stat-num {
+    color: $statBoxOrange;
+  }
+  &.orange .stat-icon {
+    background-color: $statBoxOrange;
+  }
+  /*
+      small stat box
+      used on dashboard
+  */
+  &.stat-box-small {
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    display: table;
+    margin: 0px 8px 8px 0px;
+    position: relative;
+    width: 100%;
+  }
+  &.stat-box-small > .stat-icon {
+    border-radius: 0px;
+    display: table-cell;
+    padding: 0px 10px;
+    text-align: center;
+    vertical-align: middle;
+    // width: 50px;
+  }
+  &.stat-box-small > .stat-icon > span.icon {
+    color: #fff;
+    font-size: 25px;
+  }
+  &.stat-box-small > .stat-value {
+    text-align: left;
+    padding: 10px 15px;
+    // width: 75%;
+  }
+  &.stat-box-small > .stat-value > .stat-label-top {
+    color: #555;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: normal;
+    margin: 0px;
+    text-transform: uppercase;
+  }
+  &.stat-box-small > .stat-value > .stat-label-top > i{
+    color: #555;
+    color: #999;
+    display: inline-block;
+    font-size: 11px;
+    margin-left: 6px;
+    font-style: italic;
+  }
+  &.stat-box-small > .stat-value > .stat-num {
+    font-size: 23px;
+  }
+  &.stat-box-small > .stat-value > p {
+    display: inline-block;
+    font-size: 12px;
+    margin: 0px;
+    padding: 0px;
+  }
+  /* end small stat box */
+}
+/* end stat box */

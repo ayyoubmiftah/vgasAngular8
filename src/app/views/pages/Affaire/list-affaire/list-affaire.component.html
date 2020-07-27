@@ -1,0 +1,56 @@
+<div>
+  <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item"><a ><i class="icon-settings"></i> Administration</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Liste des Affaires</li>
+    </ul>
+  </nav>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-muted">Liste des Affaires</h4>
+
+        <div class="container">
+          <div class="row">
+                <div class="col-sm-6" *ngFor="let c of business">
+
+                  <div class="metric purple">
+                    <div class="float-right">
+                      <a style="margin-right: 5px; color: red" (click)="deleteAffaire(detail,c.id)"><i class="fas fa-trash-alt font-medium-4" ></i></a>
+                      <a style="margin-left: 5px; color: green" (click)="navigatePage(c.id)"><i class="fas fa-edit font-medium-4"></i></a>
+                    </div>
+                    <!--button (click)="openConfirmationDialog()" type="button" class="btn btn-primary">Open dialog</button-->
+                    <h1>{{c.businessTitle}}</h1> <br> <span> {{c.missionsIds.length}} Missions</span>
+                    <h2 >{{c.businessAbout}}</h2>
+                    <a (click)="navigatePageShow(c.id)"><div> Plus de détails </div></a>
+                    <hr>
+                  </div>
+
+                </div>
+          </div>
+          <app-pagination [showPagination]="true"
+                          [numberOfItems]="numberOfItems"
+                          [itemsPerPage]="itemsPerPage"
+                          [totalItems]="totalElements"
+                          [totalPages]="totalPages"
+                          (onpageChanged)="pageChanged($event)"></app-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #detail>
+  <div class="modal-header">
+    <h4 class="modal-title">Suppression</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modelRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Voulez-vous vraiment supprimer cette Affaire ?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modelRef.hide()">fermer</button>
+    <button type="button" class="btn btn-primary" (click)="deleteAffaire2(id)">Ok</button>
+  </div>
+</ng-template>

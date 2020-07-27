@@ -1,0 +1,61 @@
+<div>
+  <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item"><a ><i class="icon-settings"></i> Administration</a></li>
+      <li class="breadcrumb-item active" aria-current="page" *ngIf="id==null || id==0">Ajouter Affaire</li>
+      <li class="breadcrumb-item active" aria-current="page" *ngIf="id>0">Modifier Affaire</li>
+    </ul>
+  </nav>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-muted" *ngIf="id==null || id==0">Ajouter Affaire</h4>
+        <h4 class="card-title text-muted" *ngIf="id>0">Modifier Affaire</h4>
+
+        <div class="portlet light" id="businessinfo">
+          <div class="portlet-body">
+            <div class="row">
+
+              <div class="col-md-6" >
+                <form role="form" [formGroup]="affaireForm">
+                  <div class="form-group" >
+                    <label class="control-label">Titre</label>
+                    <input type="text" placeholder="" class="form-control" formControlName="title" /> </div>
+                  <div class="form-group">
+                    <label for="single" class="control-label">Client</label>
+                    <select id="single" class="form-control select2" formControlName="client"  >
+                      <option *ngFor="let c of customer"  value="{{c.id}}" >{{c.customerFullName}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Date de début estimé</label>
+                    <input type="date" placeholder="" class="form-control" format-date  formControlName="date" /> </div>
+                  <div class="form-group">
+                    <label class="control-label">Chiffre d'affaire potentiel</label>
+                    <input type="number" placeholder="" class="form-control"  formControlName="cap" /> </div>
+                  <div class="form-group">
+                    <label class="control-label">Chiffre d'affaire réel</label>
+                    <input type="number" placeholder="" class="form-control"  formControlName="car" /> </div>
+                  <div class="form-group">
+                    <label class="control-label">Description</label>
+                    <textarea class="form-control" rows="3" placeholder=""  formControlName="desc" ></textarea>
+                  </div>
+                  <div class="row">
+                    <div class="margiv-top-10">
+                      <a (click)="addAffaire()" class="btn green-haze" style="background-color: #1877f2;color: #e4e6eb;" *ngIf="id==null || id==0"> Ajouter</a>
+                      <a (click)="addAffaire()" class="btn green-haze" style="background-color: #1877f2;color: #e4e6eb;" *ngIf="id>0"> Modifier</a>
+                    </div>
+                    <div class="margiv-top-10">
+                      <a (click)="location.back()" class="btn green-haze" *ngIf="id>0"> Annuler</a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

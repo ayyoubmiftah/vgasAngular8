@@ -1,0 +1,88 @@
+<div>
+  <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item"><a><i class="icon-settings"></i> Administration</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Nouveau Partenaire</li>
+    </ul>
+  </nav>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-muted">Nouveau Partenaire</h4>
+
+        <div class="portlet light">
+          <div class="portlet-body">
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <form role="form" [formGroup]="formPartenaire">
+                  <div class="form-group">
+                    <label class="control-label">Nom</label>
+                    <input type="text" placeholder="" formControlName="nom" class="form-control"/></div>
+                  <div class="form-group">
+                    <label class="control-label">Prénom</label>
+                    <input type="text" placeholder="" formControlName="prenom" class="form-control"/></div>
+                  <div class="form-group">
+                    <label class="control-label">Tél</label>
+                    <input type="text" placeholder="" formControlName="tel" class="form-control"/></div>
+                  <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <input type="text" placeholder="" class="form-control" formControlName="email"/></div>
+
+                  <div class="form-group">
+                    <label class="control-label">Deal commercial</label>
+                    <select class="form-control" formControlName="id">
+                      <option *ngFor="let c of deal" value="{{c.id}}">{{c.dealCommercialTitle}}</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+              <div class="col-sm-6">
+                <div style="margin: 27px 15px">
+                  <input type="file" class="btn btn-info" *ngIf="!id"
+                         (change)="showPop(cropedImage);fileChangeEvent($event)"/>
+                  <div class="col-sm-12"><img [src]="croppedImage" width="60%" height="60%" style="margin: 16px 15px"/>
+                    <div class="upload-btn-wrapper" *ngIf="id">
+                      <button class="btn">Editer</button>
+                      <input type="file" name="myfile" (change)="showPop(cropedImage);fileChangeEvent($event)"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1">
+                <div class="margiv-top-10">
+                  <a (click)="addPartenaire()" class="btn green-haze" style="background-color: #1877f2;color: #e4e6eb;"> Enregistrer </a>
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div class="margiv-top-10">
+                  <a (click)="location.back()" class="btn green-haze"> Annuler </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #cropedImage>
+  <div class="modal-header">
+    <h4 class="modal-title">Merci de confirmer</h4>
+  </div>
+  <div class="modal-body">
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="3/3"
+      [resizeToWidth]="256"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+    ></image-cropper>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="modelRef.hide()">Ok</button>
+  </div>
+</ng-template>

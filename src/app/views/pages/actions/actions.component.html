@@ -1,0 +1,80 @@
+<div>
+  <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item"><a><i class="icon-settings"></i> Administration</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Actions</li>
+    </ul>
+  </nav>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-muted">Actions</h4>
+
+        <div class="row">
+          <div class="col-md-12">
+            <!-- BEGIN TODO SIDEBAR -->
+            <div class="todo-ui">
+              <!-- END TODO SIDEBAR -->
+              <!-- BEGIN TODO CONTENT -->
+              <div class="todo-content">
+                <div class="portlet light">
+                  <!-- PROJECT HEAD -->
+                  <div class="portlet-title">
+                    <div class="caption">
+                      <i class="icon-bar-chart font-green hide"></i>
+                      <span class="caption-subject font-green bold uppercase">Actions récentes</span>
+                    </div>
+                  </div>
+                  <!-- end PROJECT HEAD -->
+                  <div class="portlet-body">
+                    <div class="table-scrollable table-scrollable-borderless">
+                      <table class="table table-hover table-light">
+                        <thead>
+                        <tr class="uppercase">
+                          <th> Titre<p></p>...</th>
+                          <th> Priorité<p></p>...</th>
+                          <th> Commentaire<p></p>...</th>
+                          <th> date de<p></p>création</th>
+                          <th> date<p></p> d'échéance</th>
+                          <th> date<p></p> clôture</th>
+                        </tr>
+                        </thead>
+                        <tbody *ngIf="actions">
+                        <tr *ngFor="let c of actions">
+                          <td>
+                            <a class="primary-link"></a>{{c.title}} </td>
+                          <td>
+                            <a class="primary-link">{{c.priority}}</a>
+                          </td>
+                          <td>
+                            <a class="primary-link">{{c.comment}}</a>
+                          </td>
+                          <td><span class="label label-sm label-info"> {{c.createdDate}} </span>
+                          </td>
+                          <td> {{c.fencedDate}} </td>
+                          <td> {{c.deadlineDate}} </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div *ngIf="showPages">
+                      <app-pagination [showPagination]="true"
+                                      [numberOfItems]="numberOfItems"
+                                      [itemsPerPage]="itemsPerPage"
+                                      [totalItems]="totalElements"
+                                      [totalPages]="totalPages"
+                                      (onpageChanged)="pageChanged($event)"></app-pagination>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END TODO CONTENT -->
+            </div>
+          </div>
+          <!-- END PAGE CONTENT-->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

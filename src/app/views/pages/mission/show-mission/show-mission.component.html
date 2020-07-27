@@ -1,0 +1,397 @@
+<div>
+  <nav style="height: 90px;" aria-label="breadcrumb">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a><i class="icon-settings"></i> Administration</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Détails d'affaires</li>
+          </ul>
+        </div>
+        <div class="col-sm-3">
+          <ul class="hList">
+            <li>
+              <div>
+                <a class="menu">
+                  <h6 class="menu-title">Actions</h6>
+                  <ul class="menu-dropdown" style="width: 68%">
+                    <div>
+                      <li (click)="actionCPop(action)" style="list-style-type: none">Nouvelle Action</li>
+                    </div>
+                  </ul>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="col-md-12">
+    <div class="row profile">
+      <div class="col-md-3">
+        <div class="profile-sidebar">
+          <div class="profile-usertitle">
+            <div class="profile-usertitle-name">
+              {{mission?.missionTitle}}
+            </div>
+            <div class="profile-usertitle-name">
+              <i class="fas fa-play-circle"
+                 style="color: #2f4894;margin: 1px 10px"></i> {{mission?.missionEstimatedDateStart}}
+            </div>
+            <div class="profile-usertitle-name">
+              <i class="fas fa-stop"
+                 style="color: #2f4894;margin: 1px 10px"></i> {{mission?.missionEstimatedDateEnd}}
+            </div>
+            <div class="profile-usertitle-job">
+              <i class="fas fa-spinner fa-spin"
+                 style="color: #2f4894;margin: 1px 10px"></i> {{mission?.missionStatusTitle}}
+            </div>
+          </div>
+          <!-- END SIDEBAR USER TITLE -->
+          <!-- SIDEBAR BUTTONS -->
+          <div class="profile-userbuttons">
+            <button type="button" class="btn btn-success btn-sm" (click)="navigatePage(id2,mission.id)">
+              Modifie
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteCPop(detail)">Supprimer
+            </button>
+          </div>
+
+          <!-- END PORTLET MAIN -->
+
+
+          <!-- END SIDEBAR BUTTONS -->
+          <!-- SIDEBAR MENU -->
+          <div class="profile-usermenu">
+            <ul class="nav">
+              <li class="active">
+                <a>
+                  <i class="fas fa-home"></i>
+                  Vue d'ensemble </a>
+              </li>
+            </ul>
+          </div>
+          <!-- END MENU -->
+          <!-- PORTLET MAIN -->
+          <div class="portlet light">
+            <!-- STAT -->
+            <div class="row list-separated profile-stat">
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <div class="uppercase profile-stat-title"> 0</div>
+                <div class="uppercase profile-stat-text"> Missions</div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <div class="uppercase profile-stat-title"> 0</div>
+                <div class="uppercase profile-stat-text" style="margin-right: 18%;"> Actions</div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <div class="uppercase profile-stat-title"> 0</div>
+                <div class="uppercase profile-stat-text" style="margin-right: -30%;"> COMPÉTENCES</div>
+              </div>
+            </div>
+            <!-- END STAT -->
+            <div>
+              <h4 class="profile-desc-title"></h4>
+              <h2 class="profile-desc-text ng-binding"></h2>
+              <div class="margin-top-20 profile-desc-link" style="margin-left: 3%">
+                <i class="fa fa-tasks fa-lg"></i>
+                {{mission?.missionTypeTitle}}
+              </div>
+            </div>
+          </div>
+          <!-- END PORTLET MAIN -->
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="profile-content">
+          <!-- BEGIN PORTLET -->
+          <div class="portlet light ">
+            <div class="portlet-title">
+              <div class="caption caption-md">
+                <i class="icon-bar-chart theme-font hide"></i>
+                <span class="caption-subject font-blue-madison bold uppercase">Les Shortlists</span>
+              </div>
+              <div style="float: right">
+                <a class="btn btn-circle"
+                   style="background-color: #659be0;padding: 9px 10px;color: white;"
+                   (click)="actionCPop(addShortlist)">Nouvelle
+                  shortlist</a>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="table-scrollable table-scrollable-borderless">
+                <table class="table table-hover table-light" *ngIf="shortlistsSeriesTable">
+                  <thead>
+                  <tr class="uppercase">
+                    <th> Titre</th>
+                    <th> Commentaire</th>
+                    <th> N° shortlist</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let c of shortlistsSeriesTable">
+                    <td><a class="primary-link"></a> {{c.title}}</td>
+                    <td><a class="primary-link">{{c.comment}}</a>
+                    </td>
+                    <td><span class="label label-sm label-info"
+                              style="margin-left: 20%"> {{c.shortlistsIds.length}}</span></td>
+                    <td><a (click)="getTableShortlist(c.id);actionCPop(tableShortlistRef)"><i
+                      class="fab fa-searchengin"></i></a>
+                      <a (click)="actionCPop(detail)"><i class="far fa-edit"></i></a>
+                      <a (click)="actionCPop(deleteTemplate)"><i
+                        class="fas fa-trash-alt"></i></a></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- END PORTLET -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<ng-template #detail>
+  <div class="modal-header">
+    <h4 class="modal-title">Suppression</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modelRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Voulez-vous vraiment supprimer ce Candidat ?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modelRef.hide()">fermer</button>
+    <button type="button" class="btn btn-primary" (click)="deleteC()">Ok</button>
+  </div>
+</ng-template>
+<ng-template #shortlist>
+  <div class="modal-header">
+    <h4 class="modal-title">Nouvelle Shortlist</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- TASK HEAD -->
+        <div>
+          <div class="form-group">
+            <label>Les Candidates</label>
+            <ng-multiselect-dropdown
+              [placeholder]="'Selectionner .....'"
+              [data]="shortlistSelect"
+              [(ngModel)]="selectedItems"
+              [settings]="dropdownSettings"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)">
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn green" (click)="modelRef.hide()">Ajouter</button>
+    <button type="button" class="btn btn-default" (click)="modelRef.hide()">Annuler</button>
+  </div>
+</ng-template>
+<ng-template #deleteTemplate>
+
+</ng-template>
+<ng-template #tableCandidatesRef>
+  <div class="modal-header">
+    <h4 class="modal-title">Merci de confirmer</h4>
+  </div>
+  <div class="modal-body">
+    <div class="portlet-body">
+      <div class="table-scrollable table-scrollable-borderless">
+        <table class="table table-hover table-light" *ngIf="tableCandidates">
+          <thead>
+          <tr class="uppercase">
+            <th> prénom</th>
+            <th> nom</th>
+            <th> Image</th>
+            <th> numéro de Téléphone</th>
+            <th> Email</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let c of tableCandidates">
+            <td><a class="primary-link"></a> {{c.candidateFirstName}}</td>
+            <td><a class="primary-link">{{c.candidateLastName}}</a>
+            <td>
+              <div style="white-space: nowrap;"><img
+                [src]="'data:image/png;base64,'+c.candidateAvatar"
+                class="width-35-per height-35-per roud-img"/>
+              </div>
+            <td><a class="primary-link">{{c.candidateMobileNo}}</a>
+            <td><a class="primary-link">{{c.candidateEmail}}</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="modelRef.hide();actionCPop(tableShortlistRef)"><i class="fas fa-angle-double-down"></i>
+      Fermer
+    </button>
+  </div>
+</ng-template>
+<ng-template #addShortlist>
+  <div class="modal-header">
+    <h4 class="modal-title">Nouvelle Shortlist</h4>
+  </div>
+  <div class="modal-body">
+    <!-- TASK HEAD -->
+    <div class="input-group" style="margin: 0 0 30px 0">
+      <div class="row">
+        <div class="col-md-2">
+          <label>Titre</label>
+        </div>
+        <div class="col-md-10">
+          <input type="text" class="form-control" [(ngModel)]="titre">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-2">
+          <label for="exampleFormControlTextarea1">Commentaire</label>
+        </div>
+        <div class="col-md-10">
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="commentaire"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn" style="background-color: #2f4894;color: white" (click)="addShortListSerie();modelRef.hide()">Ajouter</button>
+    <button type="button" class="btn btn-default" (click)="modelRef.hide()">Annuler</button>
+  </div>
+</ng-template>
+<ng-template #tableShortlistRef>
+  <div class="modal-header">
+    <h4 class="modal-title">Merci de confirmer</h4>
+    <div style="float: right">
+      <a class="btn btn-circle"
+         style="background-color: #659be0;padding: 9px 10px;color: white;"
+         (click)="modelRef.hide();actionCPop(shortlist)">Nouvelle shortlist</a>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="portlet-body">
+      <div class="table-scrollable table-scrollable-borderless">
+        <table class="table table-hover table-light" *ngIf="shortlists">
+          <thead>
+          <tr class="uppercase">
+            <th> Titre</th>
+            <th> N° des Candidates</th>
+            <th> Titre de serie</th>
+            <th> Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let c of shortlists">
+            <td><a class="primary-link"></a> {{c.shortlistTitle}}</td>
+            <td><a class="primary-link"></a> {{c.countOfCandidates}}</td>
+            <td><a class="primary-link">{{c.stepTitle}}</a></td>
+            <td><a (click)="showTableCandidates(c.id);modelRef.hide();actionCPop(tableCandidatesRef)"><i
+              class="fab fa-searchengin"></i></a>
+              <a (click)="actionCPop(detail)"><i class="far fa-edit"></i></a>
+              <a (click)="actionCPop(deleteTemplate)"><i
+                class="fas fa-trash-alt"></i></a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="modelRef.hide()"><i class="fas fa-angle-double-down"></i>
+      Fermer
+    </button>
+  </div>
+</ng-template>
+<ng-template #action>
+  <div class="modal-header">
+    <h4 class="modal-title">Nouvelle Action</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- TASK HEAD -->
+        <div class="form">
+          <!-- TASK TITLE -->
+          <div class="form-group">
+            <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Titre ..." [(ngModel)]="title">
+          </div>
+          <!-- TASK DESC -->
+          <div class="form-group">
+            <textarea class="form-control todo-taskbody-taskdesc" rows="2" placeholder="Description ..."
+                      [(ngModel)]="comment"></textarea>
+          </div>
+          <!-- END TASK DESC -->
+          <!-- TASK DUE DATE -->
+          <div class="form-group">
+            <div class="input-icon">
+              <i class="fa fa-calendar"></i>
+              <input type="date" class="form-control todo-taskbody-due" placeholder="Date de début ..."
+                     [(ngModel)]="fencedDate"></div>
+          </div>
+          <!-- TASK DUE DATE -->
+          <div class="form-group">
+            <div class="input-icon">
+              <i class="fa fa-calendar"></i>
+              <input type="date" class="form-control todo-taskbody-due" placeholder="Date de fin ..."
+                     [(ngModel)]="deadlineDate"></div>
+          </div>
+          <!-- TASK Priority -->
+          <div class="form-group">
+            <select class="form-control" [(ngModel)]="priority">
+              <option value="0" [disabled]="true">Priorité....</option>
+              <option value="Urgent">Urgent</option>
+              <option value="Important">Important</option>
+              <option value="Normal">Normal</option>
+            </select></div>
+
+          <!-- TASK Status -->
+          <div class="form-group">
+            <select class="form-control" [(ngModel)]="responsibleString" (change)="changeResponsibleString()">
+              <option value="0" [disabled]="true">Responsable....</option>
+              <option value="candidates">Candidat</option>
+              <option value="sourcers">Partenaire</option>
+              <option value="customers">Client</option>
+              <option value="contacts">Cantact</option>
+            </select></div>
+          <div class="form-group">
+            <label>{{titleFieldDropdown}}</label>
+            <ng-multiselect-dropdown
+              [disabled]="titleFieldDropdown=='selectionner Responsable'"
+              [placeholder]="'Selectionner .....'"
+              [data]="responsibleIdSelect"
+              [(ngModel)]="responsibleId"
+              [settings]="dropdown3Settings"
+              (onSelect)="onItemSelect($event)">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Category ..."
+                   [(ngModel)]="category"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn green" (click)="addAction();modelRef.hide()">Ajouter
+    </button>
+    <button type="button" class="btn btn-default" (click)="modelRef.hide()">Annuler</button>
+  </div>
+</ng-template>

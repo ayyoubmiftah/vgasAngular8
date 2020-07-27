@@ -1,0 +1,437 @@
+<div>
+  <nav style="height: 90px;" aria-label="breadcrumb">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a><i class="icon-settings"></i> Administration</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Détails d'affaires</li>
+          </ul>
+        </div>
+        <div class="col-sm-3">
+          <ul class="hList">
+            <li>
+              <div>
+                <a class="menu">
+                  <h6 class="menu-title">Actions</h6>
+                  <ul class="menu-dropdown">
+                    <li (click)="navigateAfaireCustomer()">Nouvelle Affaire</li>
+                    <li (click)="showPop(action);actionClientCantact=1">Nouvelle Action</li>
+                  </ul>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="col-md-12">
+    <div class="row profile">
+      <div class="col-md-3">
+        <div class="profile-sidebar">
+          <!-- SIDEBAR USERPIC -->
+          <div class="profile-userpic">
+            <img [src]="'data:image/png;base64,'+customer?.customerAvatar" class="img-responsive" alt="">
+          </div>
+          <!-- END SIDEBAR USERPIC -->
+          <!-- SIDEBAR USER TITLE -->
+          <div class="profile-usertitle">
+            <div class="profile-usertitle-name">
+              {{customer?.customerFullName}}
+            </div>
+            <div class="profile-usertitle-job">
+              {{customer?.customerAddress}}
+            </div>
+          </div>
+          <!-- END SIDEBAR USER TITLE -->
+          <!-- SIDEBAR BUTTONS -->
+          <div class="profile-userbuttons">
+            <button type="button" class="btn btn-success btn-sm" (click)="navigatePage(customer.id)">
+              Modifie
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="showPop(detail)">Supprimer</button>
+          </div>
+
+          <!-- END PORTLET MAIN -->
+
+
+          <!-- END SIDEBAR BUTTONS -->
+          <!-- SIDEBAR MENU -->
+          <div class="profile-usermenu">
+            <ul class="nav">
+              <li *ngIf="!Div">
+                <a (click)="changeDiv()">
+                  <i class="fas fa-home"></i>
+                  Vue d'ensemble </a>
+              </li>
+              <li class="active" *ngIf="Div">
+                <a>
+                  <i class="fas fa-home"></i>
+                  Vue d'ensemble </a>
+              </li>
+              <li *ngIf="Div">
+                <a (click)="changeDiv()">
+                  <i class="fas fa-id-card"></i>
+                  Contacts </a>
+              </li>
+              <li class="active" *ngIf="!Div">
+                <a>
+                  <i class="fas fa-id-card"></i>
+                  Contacts </a>
+              </li>
+            </ul>
+          </div>
+          <!-- END MENU -->
+          <!-- PORTLET MAIN -->
+          <div class="portlet light">
+            <!-- STAT -->
+            <div class="row list-separated profile-stat">
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <div class="uppercase profile-stat-title"> {{customer?.businessesIds.length}} </div>
+                <div class="uppercase profile-stat-text"> Affaires</div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <div class="uppercase profile-stat-title"> {{customer?.actionsIds.length}} </div>
+                <div class="uppercase profile-stat-text"> Actions</div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <div class="uppercase profile-stat-title"> {{customer?.contactsIds.length}} </div>
+                <div class="uppercase profile-stat-text"> contacts</div>
+              </div>
+            </div>
+            <!-- END STAT -->
+            <div>
+              <h4 class="profile-desc-title">{{customer?.customerAbout}}</h4>
+              <h2 class="profile-desc-text ng-binding"> {{customer?.fieldOfActivityById.fieldOfActivityTitle}} </h2>
+              <div class="margin-top-20 profile-desc-link" style="margin-left: 20px">
+                <i class="fas fa-fax fa-lg"></i>
+                {{customer?.customerFax}}
+              </div>
+              <div class="margin-top-20 profile-desc-link ng-binding" style="margin-left: 20px">
+                <i class="fa fa-phone fa-lg"></i>
+                {{customer?.customerMobileNo}}
+              </div>
+            </div>
+          </div>
+          <!-- END PORTLET MAIN -->
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="profile-content">
+          <!-- BEGIN PORTLET -->
+          <div class="portlet light " *ngIf="Div">
+            <div class="portlet-title">
+              <div class="caption caption-md">
+                <i class="icon-bar-chart theme-font hide"></i>
+                <span class="caption-subject font-blue-madison bold uppercase">Activités Récentes</span>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="table-scrollable table-scrollable-borderless">
+                <table class="table table-hover table-light">
+                  <thead>
+                  <tr class="uppercase">
+                    <th> Titre<p></p>...</th>
+                    <th> date de<p></p> création</th>
+                    <th> date <p></p>d'estimation</th>
+                    <th> Statut<p></p>...</th>
+                    <th> CHIFFRE D'AFFAIRE<p></p> POTENTIAL</th>
+                    <th> CHIFFRE D'AFFAIRE<p></p> RÉEL</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let c of business">
+                    <td>
+                      <a class="primary-link"></a>{{c.businessTitle}} </td>
+                    <td>
+                      <a class="primary-link">{{c.createdDate}}</a>
+                    </td>
+                    <td>
+                      <a class="primary-link">{{c.businessEstimatedDate}}</a>
+                    </td>
+                    <td><span class="label label-sm label-info"> {{c.businessStatuTitle}} </span>
+                    </td>
+                    <td> {{c.potentialTurnover}} </td>
+                    <td> {{c.realTurnover}} </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div *ngIf="showPages">
+                <app-pagination [showPagination]="true"
+                                [numberOfItems]="numberOfItems"
+                                [itemsPerPage]="itemsPerPage"
+                                [totalItems]="totalElements"
+                                [totalPages]="totalPages"
+                                (onpageChanged)="pageChanged($event)"></app-pagination>
+              </div>
+            </div>
+          </div>
+          <div class="portlet light " *ngIf="!Div">
+            <div class="portlet-title">
+              <div class="caption caption-md">
+                <i class="icon-bar-chart theme-font hide"></i>
+                <span class="caption-subject font-blue-madison bold uppercase">Cantacts</span>
+              </div>
+              <div>
+                <div style="float: right">
+                  <a class="btn btn-circle"
+                     style="background-color: #659be0;padding: 9px 10px;color: white;"
+                     (click)="showPopContact(edit,customer.id,1);clearFormCantact()"><i
+                    class="fas fa-user-plus"></i>Ajouter un nouveau contact</a>
+                </div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-9">
+                  <div class="col-sm-4 spaceBottom" *ngFor="let c of contacts">
+                    <div class="hovereffect">
+                      <img class="img-responsive"
+                           [src]="'data:image/png;base64,'+c?.contactAvatar" alt="">
+                      <div class="overlay">
+                        <h2>{{c.contactFirstName}} {{c.contactLastName}}</h2>
+                        <h3><a (click)="showPop(infoCantact);contact=c">Afficher Les Infos</a></h3>
+                        <a class="info info1" (click)="showPopContact(edit,c.id,2)"><i
+                          class="ft-edit"></i></a>
+                        <a class="info info2" (click)="showPopContact(delete,c.id,1)"><i
+                          class="fas fa-trash-alt"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="width: 70%">
+                <app-pagination [showPagination]="true"
+                                [numberOfItems]="numberOfItems"
+                                [itemsPerPage]="itemsPerPage"
+                                [totalItems]="totalElements"
+                                [totalPages]="totalPages"
+                                (onpageChanged)="pageChanged($event)"></app-pagination>
+              </div>
+            </div>
+          </div>
+          <!-- END PORTLET -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #detail>
+  <div class="modal-header">
+    <h4 class="modal-title">Suppression</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modelRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Voulez-vous vraiment supprimer ce Client ?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modelRef.hide()">fermer</button>
+    <button type="button" class="btn btn-primary" (click)="deleteC()">Ok</button>
+  </div>
+</ng-template>
+<ng-template #delete>
+  <div class="modal-header">
+    <h4 class="modal-title">Suppression</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modelRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Voulez-vous vraiment supprimer ce Contact ?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modelRef.hide()">fermer</button>
+    <button type="button" class="btn btn-primary" (click)="deleteContact()">Ok</button>
+  </div>
+</ng-template>
+<ng-template #edit>
+
+  <div class="modal-header">
+    <h4 class="modal-title">Modification</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modelRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form role="form" [formGroup]="formContact">
+    <div class="row">
+      <div class="col-md-7 col-sm-5 col-xs-9" style="padding: 27px">
+        <div class="form-group">
+          <label class="control-label">Nom</label>
+          <input formControlName="nom" type="text" placeholder="" class="form-control"/></div>
+        <div class="form-group">
+          <label class="control-label">Prénom</label>
+          <input formControlName="prenom" type="text" placeholder="" class="form-control"/></div>
+        <div class="form-group">
+          <label class="control-label">Email</label>
+          <input formControlName="email" type="text" placeholder="" class="form-control"/></div>
+        <div class="form-group">
+          <label class="control-label">Tél</label>
+          <input formControlName="tel" type="text" placeholder="" class="form-control"/></div>
+        <div class="form-group">
+          <label class="control-label">Fonction</label>
+          <input formControlName="job" type="text" placeholder="" class="form-control"/></div>
+        <div class="form-group">
+          <label class="control-label">Contact principal</label>
+          <input formControlName="main" type="checkbox"/></div>
+        <div class="form-group">
+          <label class="control-label">Autre information</label>
+          <input formControlName="description" type="text" placeholder="" class="form-control"/></div>
+      </div>
+      <div class="col-md-5 col-sm-7 col-xs-10" style="padding: 20px">
+        <input type="file" class="btn btn-info" *ngIf="n1==1"
+               (change)="modelRef.hide();showPop(cropedImage);fileChangeEvent($event)"/>
+        <div class="col-sm-12"><img [src]="croppedImage" style="margin: 16px 15px;width: 80%"/>
+          <div class="upload-btn-wrapper" *ngIf="n1==2">
+            <button class="btn">Editer</button>
+            <input type="file" name="myfile" (change)="modelRef.hide();showPop(cropedImage);fileChangeEvent($event)"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modelRef.hide()">fermer</button>
+    <button type="button" class="btn btn-primary" (click)="editContact()" *ngIf="n1==2">Modifier</button>
+    <button type="button" class="btn btn-primary" (click)="addContact()" *ngIf="n1==1">Ajouter</button>
+  </div>
+</ng-template>
+<ng-template #cropedImage>
+  <div class="modal-header">
+    <h4 class="modal-title">Merci de confirmer</h4>
+  </div>
+  <div class="modal-body">
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="3/3"
+      [resizeToWidth]="256"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+    ></image-cropper>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="modelRef.hide();showPop(edit)">Ok</button>
+  </div>
+</ng-template>
+<ng-template #action>
+  <div class="modal-header">
+    <h4 class="modal-title">Nouvelle Action</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- TASK HEAD -->
+        <div class="form">
+          <!-- TASK TITLE -->
+          <div class="form-group">
+            <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Titre ..." [(ngModel)]="title">
+          </div>
+          <!-- TASK DESC -->
+          <div class="form-group">
+            <textarea class="form-control todo-taskbody-taskdesc" rows="2" placeholder="Description ..."
+                      [(ngModel)]="comment"></textarea>
+          </div>
+          <!-- END TASK DESC -->
+          <!-- TASK DUE DATE -->
+          <div class="form-group">
+            <div class="input-icon">
+              <i class="fa fa-calendar"></i>
+              <input type="date" class="form-control todo-taskbody-due" placeholder="Date de début ..."
+                     [(ngModel)]="fencedDate"></div>
+          </div>
+          <!-- TASK DUE DATE -->
+          <div class="form-group">
+            <div class="input-icon">
+              <i class="fa fa-calendar"></i>
+              <input type="date" class="form-control todo-taskbody-due" placeholder="Date de fin ..."
+                     [(ngModel)]="deadlineDate"></div>
+          </div>
+          <!-- TASK Priority -->
+          <div class="form-group">
+            <select class="form-control" [(ngModel)]="priority">
+              <option value="0" [disabled]="true">Priorité....</option>
+              <option value="Urgent">Urgent</option>
+              <option value="Important">Important</option>
+              <option value="Normal">Normal</option>
+            </select></div>
+
+          <!-- TASK Status -->
+          <div class="form-group">
+            <select class="form-control" [(ngModel)]="responsibleString" (change)="changeResponsibleString()">
+              <option value="0" [disabled]="true">Responsable....</option>
+              <option value="candidates">Candidat</option>
+              <option value="sourcers">Partenaire</option>
+              <option value="customers">Client</option>
+              <option value="contacts">Cantact</option>
+            </select></div>
+          <div class="form-group">
+            <label>{{titleFieldDropdown}}</label>
+            <ng-multiselect-dropdown
+              [disabled]="titleFieldDropdown=='selectionner Responsable'"
+              [placeholder]="'Selectionner .....'"
+              [data]="responsibleIdSelect"
+              [(ngModel)]="responsibleId"
+              [settings]="dropdownSettings"
+              (onSelect)="onItemSelect($event)">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control todo-taskbody-tasktitle" placeholder="Category ..."
+                   [(ngModel)]="category"></div>
+          <input type="button" class="form-control todo-taskbody-tasktitle" (click)="testTime()" value="click">
+        {{li}}
+        </div>
+        </div>
+      </div>
+    </div>
+  <div class="modal-footer">
+    <button type="button" class="btn green" *ngIf="actionClientCantact==1"
+            (click)="addActionCustomer();modelRef.hide()">Ajouter
+    </button>
+    <button type="button" class="btn green" *ngIf="actionClientCantact==2" (click)="addActionCantact();modelRef.hide()">
+      Ajouter
+    </button>
+    <button type="button" class="btn btn-default" (click)="modelRef.hide()">Annuler</button>
+  </div>
+</ng-template>
+<ng-template #infoCantact>
+  <div class="modal-body">
+    <div class="container" style="width: 100% !important;" data-spy="scroll" data-target="#skrollSpy" data-offset="50">
+      <div class="row">
+        <div class="col-xs-8"></div><div class="col-xs-4"><ul class="hList">
+        <li>
+          <div>
+            <a class="menu">
+              <h6 class="menu-title">Actions</h6>
+              <ul class="menu-dropdown">
+                <li (click)="showPop(action);actionClientCantact=2">Nouvelle Action</li>
+              </ul>
+            </a>
+          </div>
+        </li>
+      </ul></div>
+      </div>
+      <section id="about">
+        <div class="row info" style="margin: 0 0">
+          <div class="col-xs-8">
+            <ul id="text">
+              <li><i style="margin-right: 7%;font-size: large;" class="fas fa-user"></i>{{contact.contactFirstName}} {{contact.contactLastName}}</li>
+              <li><i style="margin-right: 7%;font-size: large;" class="fas fa-info"></i>{{contact.contactAbout}}</li>
+              <li><i style="margin-right: 7%;font-size: large;" class="fas fa-envelope-open-text"></i>{{contact.contactEmail}}</li>
+            </ul>
+          </div>
+          <div id="my-photo" class="col-xs-4">
+            <img [src]="'data:image/png;base64,' +contact.contactAvatar"
+                 class="img-circle " alt="MyPhoto"/>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</ng-template>

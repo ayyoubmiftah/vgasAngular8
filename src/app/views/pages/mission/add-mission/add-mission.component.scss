@@ -1,0 +1,70 @@
+.menuEdit ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #d8d8d8;
+}
+
+.menuEdit ul li {
+  float: left;
+}
+
+.menuEdit ul li a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.menuEdit ul li a.hli:hover:not(.active) {
+  background-color: #afb4c1;
+  color: #2f4894;
+}
+
+.menuEdit ul li.active {
+  background-color: #2f4894;
+}
+.menuEdit{
+  margin-bottom: 2%;
+}
+.spanManager {
+  white-space: unset;
+  margin-bottom: 1%;
+}
+.flag-wrapper {
+  width: 100%;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.flag-wrapper:after {
+  padding-top: 75%;
+  /* ratio */
+  display: block;
+  content: '';
+}
+
+div#flag:hover {
+  box-shadow: 1px 2px 3px 2px #2f4894;
+}
+
+.flag-wrapper .flag {
+  cursor: pointer;
+  position: absolute;
+  top: 30%;
+  bottom: 0;
+  right: 0;
+  left: 30%;
+  background-size: cover;
+}
+
+.flagTable {
+  width: 30px;
+  height: 25px;
+  position: relative;
+}
+.tlangue th, .tlangue td {
+  padding: 0.8rem 1rem;
+}

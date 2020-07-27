@@ -1,0 +1,13 @@
+[{
+    "id": "ar",
+    "title": "Arabic",
+    "icon": "ar-Ar.png"
+}, {
+    "id": "en",
+    "title": "English",
+    "icon": "en-EN.png"
+}, {
+    "id": "fr",
+    "title": "French",
+    "icon": "fr-FR.png"
+}]

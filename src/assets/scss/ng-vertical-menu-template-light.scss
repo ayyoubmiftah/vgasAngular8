@@ -1,0 +1,22 @@
+// ================================================================================================
+// 	File Name: ng-vertical-menu-template-light.scss
+// 	Description: SCSS file for vertical-menu-template intervention-management-frontend version only.
+// ================================================================================================
+
+.ngb-dp-header{
+    padding-top: 5px !important;
+	&.bg-light {
+		background-color: #f8f9fa !important;
+	}
+	.btn-link{
+		border: none !important;
+	}
+}
+.ngb-tp{
+    .btn-link{
+		border: none !important;
+	}
+}
+.tab-content{
+	padding-top: 10px;
+}
